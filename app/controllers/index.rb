@@ -1,4 +1,5 @@
 get '/' do
+  @user = User.find(session[:user_id]) if session[:user_id]
   erb :index
 end
 
@@ -21,18 +22,26 @@ get '/auth' do
 
   # at this point in the code is where you'll need to create your user account and store the access token
   @user = User.find_or_create_by_username(oauth_token:@access_token.token, oauth_secret: @access_token.secret, username: @access_token.params[:screen_name])
-  p @user 
-  erb :index
-  
+  p @user
+  session[:user_id] = @user.id
+  redirect '/'
 end
 
 post '/' do
   @user = User.find(params['user'])
-  tweet = Tweet.create(text: params['tweetText'], user_id: @user.id, tweeted_at: Time.now)
-  Twitter.configure do |config|
-    config.oauth_token =  @user.oauth_token
-    config.oauth_token_secret = @user.oauth_secret
-  end
-  Twitter.update(tweet.text)
+  # tweet = Tweet.create(text: params['tweetText'], user_id: @user.id, tweeted_at: Time.now)
+  # Twitter.configure do |config|
+  #   config.oauth_token =  @user.oauth_token
+  #   config.oauth_token_secret = @user.oauth_secret
+  # end
+  @user.tweet(params['tweetText'])
+  
+end
 
+
+get '/status/:job_id' do
+  id = params[:job_id]
+  p id
+  job_is_complete(id).to_s  
+  
 end

@@ -7,7 +7,7 @@
     # we should show her a form that will allow her to send a tweet. If there is no
     # user logged-in, we should show the sign-in button.
   %>
-  <% if @access_token %>
+  <% if @user %>
     <div>
       <form id='tweetSubmit' action="/" method='post'>
         <input type="hidden" name='user' value="<%=@user.id%>">
