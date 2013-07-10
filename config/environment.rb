@@ -24,7 +24,7 @@ require 'oauth'
 require 'twitter'
 require 'sidekiq'
 require 'redis'
-require 'debugger'
+# require 'debugger'
 require 'json'
 require 'faker'
 

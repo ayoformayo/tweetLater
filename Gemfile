@@ -27,7 +27,7 @@ group :test do
   gem 'rspec'
 end
 
-gem 'debugger'
+# gem 'debugger'
 
 gem 'json'
 gem 'faker'
