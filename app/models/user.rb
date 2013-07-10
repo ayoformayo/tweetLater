@@ -1,9 +1,11 @@
 class User < ActiveRecord::Base
   has_many :tweets
 
-  def tweet(text)
+  def tweet(text,delay=0)
+    delay = delay.to_i
     tweet = tweets.create!(:text => text)
-    TweetWorker.perform_async(tweet.id)
+    TweetWorker.perform_in(delay.seconds, tweet.id)
+    # TweetWorker.perform_async(tweet.id)
   end
 
   def twitter

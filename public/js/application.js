@@ -1,26 +1,40 @@
+var retries = 0;
+
 function onResult(data) {
-  setTimeout(checkSuccess(data), 1000);
+  console.log('onResult ' + new Date().getTime());
+  setTimeout(checkSuccess(data), 500);
 }
 
 var checkSuccess = function(id) {
-
-  $.get('/status/' + id, checkResult);
-
+  console.log('checkSuccess ' + new Date().getTime());
+  retries++;
+  if (retries > 20) {
+    onFail();
+  } else {
+    $.get('/status/' + id, checkResult);
+  }
 };
 
 var checkResult = function(data) {
-  if(data == "true"){
+  console.log('checkResult ' + new Date().getTime());
+  if(data.finished) {
     onSuccess();
   } else {
-    setTimeout(checkSuccess(data), 1000);
+    setTimeout(checkSuccess(data.id), 1000);
   }
 };
 
 var onSuccess = function() {
+  console.log('onSuccess ' + new Date().getTime());
   $('#tweetSubmit').attr('disabled', '');
     $('#tweetSubmit').css('display', 'block');
     $('img').css('display', 'none');
     $('input[name="tweetText"]').val('');
+};
+
+var onFail = function() {
+  console.log('onFail ' + new Date().getTime());
+  alert('fail');
 };
 
 $(document).ready(function() {
@@ -33,5 +47,6 @@ $(document).ready(function() {
     $('#tweetSubmit').css('display', 'none');
     $('img').css('display', 'block');
     $.post('/', form, onResult);
+    console.log('after post ' + new Date().getTime());
   });
 });

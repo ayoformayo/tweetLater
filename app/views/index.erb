@@ -9,11 +9,15 @@
   %>
   <% if @user %>
     <div>
-      <form id='tweetSubmit' action="/" method='post'>
+      <p><form id='tweetSubmit' action="/" method='post'>
         <input type="hidden" name='user' value="<%=@user.id%>">
         <label for="tweetText">Tweet something</label>
-        <input name='tweetText' type="text">
-      </form>
+        <input name='tweetText' type="text" value="<%= @fake_tweet %>">
+        <label for="time"> in </label>
+        <input type="text" name='time' placeholder='0'>
+        seconds. <br>
+        <input type="submit" value='submit'>
+      </form></p>
       <img src="/original.gif" width="200">
       <p>
         <a href="/sign_out">Sign Out</a>

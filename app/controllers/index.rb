@@ -1,5 +1,6 @@
 get '/' do
   @user = User.find(session[:user_id]) if session[:user_id]
+  @fake_tweet = Faker::Company.bs
   erb :index
 end
 
@@ -29,19 +30,13 @@ end
 
 post '/' do
   @user = User.find(params['user'])
-  # tweet = Tweet.create(text: params['tweetText'], user_id: @user.id, tweeted_at: Time.now)
-  # Twitter.configure do |config|
-  #   config.oauth_token =  @user.oauth_token
-  #   config.oauth_token_secret = @user.oauth_secret
-  # end
-  @user.tweet(params['tweetText'])
-  
+  job_id = @user.tweet(params['tweetText'], params['time'])
+  return job_id
 end
 
 
 get '/status/:job_id' do
   id = params[:job_id]
-  p id
-  job_is_complete(id).to_s  
-  
+  content_type :json
+  {finished: job_is_complete(id), id: id}.to_json   
 end

@@ -27,3 +27,6 @@ group :test do
 end
 
 gem 'debugger'
+
+gem 'json'
+gem 'faker'
