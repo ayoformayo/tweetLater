@@ -1,6 +1,6 @@
 get '/' do
   @user = User.find(session[:user_id]) if session[:user_id]
-  @fake_tweet = Faker::Company.bs
+  # @fake_tweet = Faker::Company.bs
   erb :index
 end
 
