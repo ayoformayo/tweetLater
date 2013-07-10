@@ -7,8 +7,10 @@ function onResult(data) {
 
 var checkSuccess = function(id) {
   console.log('checkSuccess ' + new Date().getTime());
+  console.log(id);
   retries++;
   if (retries > 20) {
+    retries = 0;
     onFail();
   } else {
     $.get('/status/' + id, checkResult);
@@ -17,7 +19,9 @@ var checkSuccess = function(id) {
 
 var checkResult = function(data) {
   console.log('checkResult ' + new Date().getTime());
+  console.log(data);
   if(data.finished) {
+    retries = 0;
     onSuccess();
   } else {
     setTimeout(checkSuccess(data.id), 1000);
