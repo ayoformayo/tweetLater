@@ -22,7 +22,7 @@ gem 'shotgun'
 gem 'oauth'
 gem 'twitter'
 
-group :test do
+group :test, :development do
   gem 'faker'
   gem 'rspec'
   gem 'debugger'
