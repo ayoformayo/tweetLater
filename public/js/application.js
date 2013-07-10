@@ -2,7 +2,7 @@ var retries = 0;
 
 function onResult(data) {
   console.log('onResult ' + new Date().getTime());
-  setTimeout(checkSuccess(data), 500);
+  setTimeout(function() {checkSuccess(data)}, 500);
 }
 
 var checkSuccess = function(id) {
@@ -24,7 +24,7 @@ var checkResult = function(data) {
     retries = 0;
     onSuccess();
   } else {
-    setTimeout(checkSuccess(data.id), 1000);
+    setTimeout(function() {checkSuccess(data.id)}, 1000);
   }
 };
 
