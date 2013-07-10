@@ -24,9 +24,12 @@ require 'oauth'
 require 'twitter'
 require 'sidekiq'
 require 'redis'
-# require 'debugger'
 require 'json'
-require 'faker'
+
+if Sinatra::Application.development?
+  require 'debugger'
+  require 'faker'
+end
 
 # Some helper constants for path-centric logic
 APP_ROOT = Pathname.new(File.expand_path('../../', __FILE__))

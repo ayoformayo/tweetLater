@@ -25,9 +25,9 @@ gem 'twitter'
 group :test do
   gem 'faker'
   gem 'rspec'
+  gem 'debugger'
 end
 
-# gem 'debugger'
 
 gem 'json'
 gem 'faker'
